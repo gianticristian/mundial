@@ -1,6 +1,12 @@
 $(document).ready(function() {
         const config = {
-        //AQUÍ VA TU PORPIO SDK DE FIREBASE
+            apiKey: "AIzaSyAILy7Ztt9_YBlBoupGUpnh6cVCRChrptA",
+            authDomain: "mundial-6b85e.firebaseapp.com",
+            databaseURL: "https://mundial-6b85e-default-rtdb.firebaseio.com",
+            projectId: "mundial-6b85e",
+            storageBucket: "mundial-6b85e.appspot.com",
+            messagingSenderId: "36257033801",
+            appId: "1:36257033801:web:142b2b7676f35b8e2e9998"
     };    
     firebase.initializeApp(config); //inicializamos firebase
     
@@ -16,6 +22,25 @@ $(document).ready(function() {
          
     var dataSet = [];//array para guardar los valores de los campos inputs del form
     var table = $('#tablaProductos').DataTable({
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ Entradas",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Ultimo",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    },
+                },
                 pageLength : 5,
                 lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
                 data: dataSet,
