@@ -41,7 +41,7 @@ $(document).ready(function() {
                         "previous": "Anterior"
                     },
                 },
-                pageLength : 5,
+                pageLength : 20,
                 lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
                 data: dataSet,
                 columnDefs: [
@@ -57,11 +57,11 @@ $(document).ready(function() {
             });
 
     coleccionProductos.on("child_added", datos => {        
-        dataSet = [datos.key, datos.child("codigo").val(), datos.child("descripcion").val(), datos.child("cantidad").val()];
+        dataSet = [datos.key, datos.child("codigo").val(), datos.child("descripcion").val(), datos.child("precio").val()];
         table.rows.add([dataSet]).draw();
     });
     coleccionProductos.on('child_changed', datos => {           
-        dataSet = [datos.key, datos.child("codigo").val(), datos.child("descripcion").val(), datos.child("cantidad").val()];
+        dataSet = [datos.key, datos.child("codigo").val(), datos.child("descripcion").val(), datos.child("precio").val()];
         table.row(filaEditada).data(dataSet).draw();
     });
     coleccionProductos.on("child_removed", function() {
@@ -73,12 +73,12 @@ $(document).ready(function() {
         let id = $.trim($('#id').val());        
         let codigo = $.trim($('#codigo').val());
         let descripcion = $.trim($('#descripcion').val());         
-        let cantidad = $.trim($('#cantidad').val());                         
+        let precio = $.trim($('#precio').val());                         
         let idFirebase = id;        
         if (idFirebase == ''){                      
             idFirebase = coleccionProductos.push().key;
         };                
-        data = {codigo:codigo, descripcion:descripcion, cantidad:cantidad};             
+        data = {codigo:codigo, descripcion:descripcion, precio:precio};             
         actualizacionData = {};
         actualizacionData[`/${idFirebase}`] = data;
         coleccionProductos.update(actualizacionData);
@@ -92,7 +92,7 @@ $(document).ready(function() {
         $('#id').val('');        
         $('#codigo').val('');
         $('#descripcion').val('');         
-        $('#cantidad').val('');      
+        $('#precio').val('');      
         $("form").trigger("reset");
         $('#modalAltaEdicion').modal('show');
     });        
@@ -104,11 +104,11 @@ $(document).ready(function() {
         console.log(id);
 		let codigo = $(this).closest('tr').find('td:eq(0)').text(); 
         let descripcion = $(this).closest('tr').find('td:eq(1)').text();        
-        let cantidad = parseInt($(this).closest('tr').find('td:eq(2)').text());        
+        let precio = parseInt($(this).closest('tr').find('td:eq(2)').text());        
         $('#id').val(id);        
         $('#codigo').val(codigo);
         $('#descripcion').val(descripcion);                
-        $('#cantidad').val(cantidad);                
+        $('#precio').val(precio);                
         $('#modalAltaEdicion').modal('show');
 	});  
   
