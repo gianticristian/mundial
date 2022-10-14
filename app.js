@@ -22,48 +22,76 @@ $(document).ready(function() {
          
     var dataSet = [];//array para guardar los valores de los campos inputs del form
     var table = $('#tablaProductos').DataTable({
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ Entradas",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Ultimo",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    },
-                },
-                pageLength : 20,
-                lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
-                data: dataSet,
-                columnDefs: [
-                    {
-                        targets: [0], 
-                        visible: false, //ocultamos la columna de ID que es la [0]                        
-                    },
-                    {
-                        targets: -1,        
-                        defaultContent: "<div class='wrapper text-center'><div class='btn-group'><button class='btnEditar btn btn-primary' data-toggle='tooltip' title='Editar'>"+iconoEditar+"</button><button class='btnBorrar btn btn-danger' data-toggle='tooltip' title='Borrar'>"+iconoBorrar+"</button></div></div>"
-                    }
-                ]	   
-            });
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
+            "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ Entradas",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "paginate": {
+                "first": "Primero",
+                "last": "Ultimo",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            },
+        },
+        pageLength : 20,
+        lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+        data: dataSet,
+        columnDefs: [
+            {
+                targets: [0], 
+                visible: false, //ocultamos la columna de ID que es la [0]                        
+            },
+            {
+                targets: -1,        
+                defaultContent: "<div class='wrapper text-center'><div class='btn-group'><button class='btnEditar btn btn-primary' data-toggle='tooltip' title='Editar'>"+ iconoEditar + "</button><button class='btnBorrar btn btn-danger' data-toggle='tooltip' title='Borrar'>"+ iconoBorrar +"</button></div></div>"
+            }
+        ],
+        responsive: "true",
+        dom: "flrtipB",//frtilpB
+        buttons: [{
+            extend: "pdf",
+            className: 'btn btn-danger',
+            text: "Descargar PDF",
+            title: "Mundial",
+            messageTop: "Fecha",
+            filename: "Mundial-2022-Octubre",
+            exportOptions: {
+                columns: [1, 2, 3]
+            }
+        },
+        {
+            extend: 'spacer',
+        },
+        {
+            extend: "print",
+            text: "Imprimir",
+            title: "Mundial",
+            messageTop: "Fecha",
+            filename: "Mundial-2022-Octubre",
+            exportOptions: {
+                columns: [1, 2, 3]
+            }
+        }]
+    });
 
     coleccionProductos.on("child_added", datos => {        
         dataSet = [datos.key, datos.child("codigo").val(), datos.child("descripcion").val(), datos.child("precio").val()];
         table.rows.add([dataSet]).draw();
     });
+
     coleccionProductos.on('child_changed', datos => {           
         dataSet = [datos.key, datos.child("codigo").val(), datos.child("descripcion").val(), datos.child("precio").val()];
         table.row(filaEditada).data(dataSet).draw();
     });
+
     coleccionProductos.on("child_removed", function() {
         table.row(filaEliminada.parents('tr')).remove().draw();                     
     });
