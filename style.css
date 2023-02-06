@@ -7,6 +7,10 @@ body {
     background-color: white;
 }
 
+#contacto {
+    text-align: center;
+}
+
 #formulario {
     display: none;
 }
